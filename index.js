@@ -87,7 +87,7 @@ server.listen(PORT, () => {
 });
 
 async function startNazeBot() {
-  const { state, saveCreds } = await useMultiFileAuthState('');
+  const { state, saveCreds } = await useMultiFileAuthState('nazedev');
   const { version, isLatest } = await fetchLatestBaileysVersion();
   const level = pino({ level: 'silent' });
   
@@ -387,4 +387,5 @@ fs.watchFile(file, () => {
   delete require.cache[file]
   require(file)
 });
+
 
