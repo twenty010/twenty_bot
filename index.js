@@ -21,17 +21,42 @@ const { isUrl, generateMessageTag, getBuffer, getSizeMedia, fetchJson, assertIns
 
 const print = (label, value) => console.log(`${chalk.green.bold('║')} ${chalk.cyan.bold(label.padEnd(16))}${chalk.yellow.bold(':')} ${value}`);
 const pairingCode = process.argv.includes('--qr') ? false : process.argv.includes('--pairing-code') || global.pairing_code;
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-const question = (text) => new Promise((resolve) => rl.question(text, resolve))
+
+// إعداد readline بشكل آمن
+const createReadlineInterface = () => {
+  return readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+};
+
+let rl = createReadlineInterface();
+
+// دالة question محسنة
+const question = (text) => {
+  return new Promise((resolve) => {
+    if (rl.closed) {
+      rl = createReadlineInterface();
+    }
+    
+    rl.question(text, (answer) => {
+      resolve(answer);
+    });
+  });
+};
+
 let pairingStarted = false;
 let phoneNumber;
 
+// الرقم الافتراضي
+const DEFAULT_PHONE_NUMBER = '967737088693';
+
 const userInfoSyt = () => {
-	try {
-		return os.userInfo().username
-	} catch (e) {
-		return process.env.USER || process.env.USERNAME || 'unknown';
-	}
+  try {
+    return os.userInfo().username
+  } catch (e) {
+    return process.env.USER || process.env.USERNAME || 'unknown';
+  }
 }
 
 global.fetchApi = async (path = '/', query = {}, options) => {
@@ -345,4 +370,5 @@ fs.watchFile(file, () => {
 	delete require.cache[file]
 	require(file)
 });
+
 
