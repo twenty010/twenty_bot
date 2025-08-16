@@ -5,6 +5,7 @@
   "main": "start.js",
   "type": "commonjs",
   "scripts": {
+    "build": "node index.js"
     "start": "node index.js",
     "dev": "nodemon index.js",
     "debug": "DEBUG=* node start.js"
