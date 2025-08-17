@@ -38,7 +38,7 @@ global.fake = {
 global.my = {
 	yt: 'https://youtube.com/c/Nazedev',
 	gh: 'https://github.com/twenty010',
-	gc: '12026340352676031@newsletter',
+	gc: '120363316766895479@newsletter',
 }
 
 global.limit = {
@@ -89,6 +89,7 @@ fs.watchFile(file, () => {
 	delete require.cache[file]
 	require(file)
 });
+
 
 
 
