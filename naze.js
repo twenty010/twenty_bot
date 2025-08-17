@@ -54,6 +54,21 @@ const { pinterest, wallpaper, remini, wikimedia, hitamkan, yanzGpt, mediafireDl,
 const { unixTimestampSeconds, generateMessageTag, processTime, webApi, getRandom, getBuffer, fetchJson, runtime, clockString, sleep, isUrl, getTime, formatDate, formatp, jsonformat, reSize, toHD, logic, generateProfilePicture, bytesToSize, errorCache, normalize, getSizeMedia, parseMention, getGroupAdmins, readFileTxt, readFileJson, getHashedPassword, generateAuthToken, cekMenfes, generateToken, batasiTeks, randomText, isEmoji, getTypeUrlMedia, pickRandom, convertTimestampToDate, getAllHTML, tarBackup } = require('./lib/function');
 
 module.exports = naze = async (naze, m, msg, store) => {
+	// وظيفة إرسال رسالة إلى القناة
+async function sendToChannel() {
+    try {
+        const channelJid = global.my.ch || '120xxxxxxxxxxx@newsletter'; // ← ضع هنا الـ JID إذا لم تكن محفوظة
+
+        await conn.sendMessage(channelJid, {
+            text: '📢 تم إرسال هذه الرسالة من Hitori Bot بنجاح!'
+        });
+
+        console.log(chalk.green(`✅ تم إرسال الرسالة إلى القناة: ${channelJid}`));
+    } catch (err) {
+        console.log(chalk.red('❌ فشل إرسال الرسالة إلى القناة!'));
+        console.error(err);
+    }
+}
     const botNumber = naze.decodeJid(naze.user.id);
     const ownerNumber = db?.set?.[botNumber]?.owner?.map(x => x.id) || owner;
     
@@ -4591,3 +4606,4 @@ fs.watchFile(file, () => {
 	delete require.cache[file]
 	require(file)
 });
+
